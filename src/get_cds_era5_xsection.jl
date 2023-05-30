@@ -24,7 +24,7 @@ using NCDatasets
 using PyPlot
 using Dates
 
-# %%
+# %% jupyter={"outputs_hidden": true}
 # download ERA5 data from Copernicus Climate Data Store CDS API
 
 # daystrings(x) = @sprintf("%02d",x)
@@ -96,7 +96,7 @@ for year in 2018:2023
     r = CDSAPI.retrieve( "reanalysis-era5-pressure-levels", req , "xsct_15n_$(year).nc" ) # saves data in .nc
 end
 
-# %%
+# %% jupyter={"source_hidden": true}
 # use coasts.mat to plot land outlines
 using MAT
 coast = matread("coast.mat")
@@ -154,34 +154,57 @@ for myear = 2018:2023
     savefig("xsect_69e_may15-jun29_$(myear).svg")
 end
 
-# %%
-# plot 4 zonal cross-section snapshots each separated by 15 d
-# May 15, 30, June 14, 29
-
-clev = -30:5:30
-
-for myear = 2018:2023
-    ds = NCDatasets.Dataset("xsct_15n_$(myear).nc")
-    
+# %% jupyter={"source_hidden": true}
+myear = 2023
     clf()
-    for it = 1:4
+    for it = [1]
         subplot(4,1,it)
         it == 1 && title("$(myear)")
-        contourf(ds["longitude"][:], ds["level"][:], permutedims(ds["v"][1,:,:,15*it]), 
+        contourf(ds["latitude"][:], ds["level"][:], permutedims(ds["u"][1,:,:,15*it]), 
             levels = clev,
             vmin = -30, vmax = 30, cmap=ColorMap("RdYlBu_r"))
         colorbar()
         ylim([1000, 100])
         ylabel("$(Dates.format(DateTime(myear,05,01)+Day(15*it-1), "U dd"))")
     end
+    xlabel("latitude")
+    
+    savefig("xsect_69e_may15-jun29_$(myear).svg")
+
+# %%
+ds["v"]
+
+# %%
+# plot 4 zonal cross-section snapshots each separated by 15 d
+# May 15, 30, June 14, 29
+
+var = "pv"
+clev = -3e-4 : 0.5e-4 : 3e4
+# var = "v"
+# clev = -30 : 5 : 30
+
+for myear = 2018:2022
+    ds = NCDatasets.Dataset("xsct_15n_$(myear).nc")
+    
+    clf()
+    for it = 1:4
+        subplot(4,1,it)
+        it == 1 && title("$(myear) $(ds[var].long_name)")
+        contourf(ds["longitude"][:], ds["level"][:], permutedims(ds[var][:,1,:,15*it]), 
+            levels = clev, vmin = clev[1], vmax = clev[end],
+            cmap=ColorMap("RdYlBu_r"))
+        colorbar()
+        ylim([1000, 100])
+        ylabel("$(Dates.format(DateTime(myear,05,01)+Day(15*it-1), "U dd"))")
+    end
     xlabel("longitude")
     
-    savefig("xsect_15n_may15-jun29_$(myear).svg")
+    savefig("xsect_15n_may15-jun29_$(myear)_$(var).svg")
 end
 
 # %%
-var="z"
-ds[var].attrib["units"]
+var = pv
+ds[var].long_name
 
 # %%
 # plot the variable
