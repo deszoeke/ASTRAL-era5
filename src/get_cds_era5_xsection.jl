@@ -133,6 +133,7 @@ ds = NCDatasets.Dataset("xsct_69e_$(myear).nc")
 # plot 4 meridional cross-section snapshots each separated by 15 d
 # May 15, 30, June 14, 29
 
+var = "u"
 clev = -30:5:30
 
 for myear = 2018:2023
@@ -142,7 +143,7 @@ for myear = 2018:2023
     for it = 1:4
         subplot(4,1,it)
         it == 1 && title("$(myear)")
-        contourf(ds["latitude"][:], ds["level"][:], permutedims(ds["u"][1,:,:,15*it]), 
+        contourf(ds["latitude"][:], ds["level"][:], permutedims(ds[var][1,:,:,15*it]), 
             levels = clev,
             vmin = -30, vmax = 30, cmap=ColorMap("RdYlBu_r"))
         colorbar()
@@ -151,7 +152,7 @@ for myear = 2018:2023
     end
     xlabel("latitude")
     
-    savefig("xsect_69e_may15-jun29_$(myear).svg")
+    savefig("xsect_69e_may15-jun29_$(myear)_$(var).svg")
 end
 
 # %% jupyter={"source_hidden": true}
