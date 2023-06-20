@@ -24,7 +24,7 @@ using NCDatasets
 using PyPlot
 using Dates
 
-# %% jupyter={"outputs_hidden": true}
+# %%
 # download ERA5 data from Copernicus Climate Data Store CDS API
 
 # daystrings(x) = @sprintf("%02d",x)
@@ -37,7 +37,8 @@ python format list of days this way:
 # AD 07 mooring: 68.97 °E, 14.9 °N
 
 # May-June meridional section along 69 E, one file per year
-for year in 2018:2023
+# for year in 2018:2023
+for year in 2023:2023
     req = CDSAPI.py2ju("""
                              {
                                  'product_type': 'reanalysis',
@@ -69,7 +70,8 @@ end
 # AD 07 mooring: 68.97 °E, 14.9 °N
 # May-June meridional section along 15 N, one file per year
 
-for year in 2018:2023
+# for year in 2018:2023
+for year in 2023:2023
     req = CDSAPI.py2ju("""
                              {
                                  'product_type': 'reanalysis',
@@ -125,9 +127,13 @@ ylim([-4, 30])
 xlim([40, 90])
 
 # %%
-# get data from local copy
-myear = 2018
+# # get data from local copy for 1 year
+myear = 2023
+it=1
 ds = NCDatasets.Dataset("xsct_69e_$(myear).nc")
+ds["latitude"][:], ds["level"][:], permutedims(ds[var][1,:,:,15*it])
+nt = size(ds[var],4)
+1:min(floor(Int,nt/15), 4)
 
 # %%
 # plot 4 meridional cross-section snapshots each separated by 15 d
@@ -136,11 +142,13 @@ ds = NCDatasets.Dataset("xsct_69e_$(myear).nc")
 var = "u"
 clev = -30:5:30
 
-for myear = 2018:2023
+# for myear = 2018:2023
+for myear = 2023:2023
     ds = NCDatasets.Dataset("xsct_69e_$(myear).nc")
     
     clf()
-    for it = 1:4
+    nt = size(ds[var],4)
+    for it = 1:min(floor(Int,nt/15), 4)
         subplot(4,1,it)
         it == 1 && title("$(myear)")
         contourf(ds["latitude"][:], ds["level"][:], permutedims(ds[var][1,:,:,15*it]), 
