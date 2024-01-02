@@ -15,10 +15,12 @@ using Dates
 python format list of days this way:
 ["{:02d}".format(x) for x in range(1, 31+1)]
 =#
+
 # full region
 #                             'area': [30, 40, -4, 90],
 # AD 07 mooring: 68.97 °E, 14.9 °N
 
+#=
 # May-June meridional section along 69 E, one file per year
 # for year in 2018:2023
 for year in 2023:2023
@@ -47,6 +49,7 @@ for year in 2023:2023
     # download commented out
     r = CDSAPI.retrieve( "reanalysis-era5-pressure-levels", req , "xsct_69e_$(year).nc" ) # saves data in .nc
 end
+=#
 
 # %%
 # download ERA5 data from Copernicus Climate Data Store CDS API                          'area': [30, 40, -4, 90],
@@ -54,7 +57,7 @@ end
 # May-June meridional section along 15 N, one file per year
 
 # for year in 2018:2023
-for year in 2023:2023
+for year in 2005:-1:2000
     req = CDSAPI.py2ju("""
                              {
                                  'product_type': 'reanalysis',
