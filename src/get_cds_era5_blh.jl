@@ -6,7 +6,7 @@ Pkg.activate("..")
 using CDSAPI
 using NCDatasets
 using Statistics
-using PyPlot, PyCall
+using PyPlot
 
 ##
 # download ERA5 data from Copernicus Climate Data Store CDS API
@@ -23,15 +23,18 @@ req = CDSAPI.py2ju("""
             			      '19', '20', '21', '22', '23', '24',
             			      '25', '26', '27', '28', '29', '30',
             			      '31',],
-                             'year': ['2018', '2019', '2020', '2021', '2022', '2023'],
-                             'variable': 'boundary_layer_height',
+                             'year': ['2023', '2022', '2021', '2020', '2019', '2018'],
+                             'variable': 'total_precipitation',
                          }
                          """)
-# r = CDSAPI.retrieve( "reanalysis-era5-single-levels", req , "era5_as_blh.nc" ) # saves data as .nc file
+#boundary_layer_height
+#'sea_level_pressure'
+
+r = CDSAPI.retrieve( "reanalysis-era5-single-levels", req , "era5_as_tpr.nc" ) # saves data as .nc file
 
 ##
 # plot data from local copy
-ds = NCDatasets.Dataset("era5_as_blh.nc")
+ds = NCDatasets.Dataset("era5_as_prt.nc")
 
 # use cartopy to make plots
 ccrs = pyimport("cartopy.crs")
