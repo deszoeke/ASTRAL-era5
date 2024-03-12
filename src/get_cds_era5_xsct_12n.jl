@@ -16,7 +16,7 @@ lat = 12
 # lon = 90 # central BoB longitude
 
 # for year in 2018:2023
-for year in 2023:-1:2010
+for year in 2019:-1:2010
     req = CDSAPI.py2ju("""
                              {
                                  'product_type': 'reanalysis',
