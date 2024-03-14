@@ -1,4 +1,6 @@
 .ipynb_checkpoints/
+Manifest.toml
 era5_as_850_1000.nc
 
 src/*.nc
+src/.vscode
