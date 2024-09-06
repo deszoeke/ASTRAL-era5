@@ -12,19 +12,19 @@ using Dates
 # AD 07 mooring: 68.97 °E, 14.9 °N
 # May-June meridional section along 15 N, one file per year
 
-lon = 90 # central BoB longitude
+lat = 11
+# lon = 90 # central BoB longitude
 
 # for year in 2018:2023
-#for year in 2021:-1:2000
-for year in 2024:-1:2024
+for year in 2024:-1:2010
     req = CDSAPI.py2ju("""
                              {
                                  'product_type': 'reanalysis',
                                  'format': 'netcdf',
-                                 'area': [-4, $(lon), 30, $(lon)],
+                                 'area': [$(lat), 40, $(lat), 100],
                                  'time': '00:00',
                                  'month': [ '04', '05', '06' ],
-                                 'day':   [ '01', '02', '03', '04', '05', '06',
+                                 'day':     [ '01', '02', '03', '04', '05', '06',
                                   '07', '08', '09', '10', '11', '12',
                                   '13', '14', '15', '16', '17', '18',
                                   '19', '20', '21', '22', '23', '24',
@@ -39,7 +39,6 @@ for year in 2024:-1:2024
                              }
                         """)
 
-    # download commented out
-    r = CDSAPI.retrieve( "reanalysis-era5-pressure-levels", req , "xsct_$(lon)e_$(year).nc" ) # saves data in .nc
+    r = CDSAPI.retrieve( "reanalysis-era5-pressure-levels", req , "xsct_$(lat)n_$(year).nc" ) # saves data in .nc
 end
 

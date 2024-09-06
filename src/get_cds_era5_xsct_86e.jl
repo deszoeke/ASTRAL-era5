@@ -15,7 +15,7 @@ using Dates
 lon = 86 # ASTRAL IOP central BoB longitude
 
 # for year in 2018:2023
-for year in 2024:-1:2015
+for year in 2024:-1:2024  # 2015
     req = CDSAPI.py2ju("""
                              {
                                  'product_type': 'reanalysis',

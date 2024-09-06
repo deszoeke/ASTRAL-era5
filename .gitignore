@@ -5,3 +5,4 @@ era5_as_850_1000.nc
 data/
 src/*.nc
 src/.vscode
+.DS_Store
