@@ -2,7 +2,19 @@
 Manifest.toml
 era5_as_850_1000.nc
 
+*.nc
+*.pdf
+*.svg
+*.png
+
 data/
 src/*.nc
+src/*.pdf
+src/*.svg
+src/*.png
 src/.vscode
 .DS_Store
+src/xsect_69e_may15-jun29_2024_u.pdf
+src/xsect_69e_may15-jun29_2024_u.svg
+src/xsect_86e_2024_u.pdf
+src/xsect_86e_2024_vo.pdf

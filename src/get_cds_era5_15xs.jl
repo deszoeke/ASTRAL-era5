@@ -54,7 +54,7 @@ python format list of days this way:
 # May-June meridional section along 15 N, one file per year
 
 # for year in 2018:2023
-# for year in 2023:2023
+for year in 2023:2023
     req = CDSAPI.py2ju("""
                              {
                                  'product_type': 'reanalysis',
